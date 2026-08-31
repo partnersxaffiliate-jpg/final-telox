@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, ArrowRight, X, ArrowUpRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Reveal } from '@/components/reveal';
 
 const projects = [
@@ -46,6 +46,13 @@ const projects = [
     shortDesc: 'Complete brand identity and marketing website.',
     image: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1200&h=800&fit=crop',
     tags: ['Branding', 'Webflow', 'Motion', 'SEO'],
+  },
+  {
+    title: 'Crosus',
+    category: 'Artisanal E-Commerce',
+    shortDesc: 'Boutique e-commerce platform for handcrafted crochet business in Nepal.',
+    image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=800&fit=crop',
+    tags: ['E-Commerce', 'Branding', 'Webflow', 'Nepal'],
   },
 ];
 
@@ -169,6 +176,7 @@ const caseStudies: Record<string, { sections: { image: string; title: string; de
 export function WorkPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [view, setView] = useState<'list' | 'study'>('list');
+  const navigate = useNavigate();
   const project = projects[currentIndex];
 
   const goTo = (index: number) => {
@@ -179,7 +187,13 @@ export function WorkPage() {
   const next = () => goTo((currentIndex + 1) % projects.length);
   const prev = () => goTo((currentIndex - 1 + projects.length) % projects.length);
 
-  const openStudy = () => setView('study');
+  const openStudy = () => {
+    if (project.title === 'Crosus') {
+      navigate('/work/crosus');
+    } else {
+      setView('study');
+    }
+  };
   const closeStudy = () => setView('list');
 
   const study = caseStudies[project.title];

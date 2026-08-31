@@ -9,6 +9,7 @@ import { WorkPage } from '@/pages/work';
 import { AboutPage } from '@/pages/about';
 import { ContactPage } from '@/pages/contact';
 import Demo from '@/pages/demo';
+import { CrosusCaseStudy } from '@/pages/crosus-case-study';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -33,6 +34,7 @@ function Layout() {
           <Route path="/" element={<HomePage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/work" element={<WorkPage />} />
+          <Route path="/work/crosus" element={<CrosusCaseStudy />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/demo" element={<Demo />} />
