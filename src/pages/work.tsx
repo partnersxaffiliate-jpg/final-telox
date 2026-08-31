@@ -54,6 +54,13 @@ const projects = [
     image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=800&fit=crop',
     tags: ['E-Commerce', 'Branding', 'Webflow', 'Nepal'],
   },
+  {
+    title: 'Nikon the Beats',
+    category: 'Sonic Architecture & Audio Production',
+    shortDesc: 'Atmospheric web application for a premier music producer and audio engineer based in Nepal.',
+    image: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1200&h=800&fit=crop',
+    tags: ['Web App', 'Audio Platform', 'UI/UX', 'Nepal'],
+  },
 ];
 
 const caseStudies: Record<string, { sections: { image: string; title: string; desc: string }[] }> = {
@@ -190,6 +197,8 @@ export function WorkPage() {
   const openStudy = () => {
     if (project.title === 'Crosus') {
       navigate('/work/crosus');
+    } else if (project.title === 'Nikon the Beats') {
+      navigate('/work/nikon-the-beats');
     } else {
       setView('study');
     }

@@ -10,6 +10,7 @@ import { AboutPage } from '@/pages/about';
 import { ContactPage } from '@/pages/contact';
 import Demo from '@/pages/demo';
 import { CrosusCaseStudy } from '@/pages/crosus-case-study';
+import { NikonTheBeatsCaseStudy } from '@/pages/nikon-the-beats-case-study';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -35,6 +36,7 @@ function Layout() {
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/work" element={<WorkPage />} />
           <Route path="/work/crosus" element={<CrosusCaseStudy />} />
+          <Route path="/work/nikon-the-beats" element={<NikonTheBeatsCaseStudy />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/demo" element={<Demo />} />
