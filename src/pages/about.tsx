@@ -90,9 +90,12 @@ export function AboutPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
                 <div className="relative aspect-[4/5] md:aspect-auto overflow-hidden">
                   <img
-                    src="https://i.postimg.cc/7P0Btd6V/20260414-160314-0000.png"
+                    src="https://i.postimg.cc/7P0Btd6V/20260414_160314_0000.png"
                     alt="Rohet Chunara"
-                    className="w-full h-full object-cover"
+                    width="600"
+                    height="750"
+                    className="w-full h-full object-cover grayscale"
+                    loading="eager"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent md:bg-gradient-to-r" />
                 </div>
