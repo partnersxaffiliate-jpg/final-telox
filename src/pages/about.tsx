@@ -90,28 +90,18 @@ export function AboutPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
                 <div className="relative aspect-[4/5] md:aspect-auto overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop&crop=face"
-                    alt="Rohet Chunara, Founder and Lead Engineer of Telox Design"
-                    width="800"
-                    height="1000"
+                    src="https://i.postimg.cc/7P0Btd6V/20260414-160314-0000.png"
+                    alt="Rohet Chunara"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent md:bg-gradient-to-r" />
                 </div>
                 <div className="p-8 md:p-12 flex flex-col justify-center">
                   <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-2">Rohet Chunara</h3>
-                  <p className="text-primary font-mono text-sm uppercase tracking-widest mb-6">Founder & Lead Engineer</p>
-                  <p className="text-muted-foreground leading-relaxed mb-6">
-                    Rohet founded Telox Design with a clear purpose: make high-quality digital craftsmanship accessible to every business, not just the biggest players.
+                  <p className="text-primary font-mono text-sm uppercase tracking-widest mb-6">Founder</p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Rohet founded Telox Design with a clear vision: make high-quality digital craftsmanship accessible to every business. He believes great design and solid engineering aren't luxuries — they're the baseline.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed mb-8">
-                    With over a decade of experience across full-stack engineering and product design, he leads every project with a hands-on approach. From architecture decisions to final pixel polish, Rohet ensures Telox delivers work that is as thoughtful as it is performant.
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    <span className="px-4 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">Full-Stack Engineering</span>
-                    <span className="px-4 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">Product Strategy</span>
-                    <span className="px-4 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">Design Systems</span>
-                  </div>
                 </div>
               </div>
             </div>
