@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, FormEvent } from "react";
 import { ContactCard } from "@/components/ui/contact-card";
 import { Mail, Phone, MapPin, Award, Users, Send, CheckCircle2, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -9,13 +9,32 @@ import { motion } from "motion/react";
 
 type FormStatus = 'idle' | 'submitting' | 'success';
 
+const RECIPIENT_EMAIL = "teloxdesign@gmail.com";
+
 export default function GetInTouchSection() {
   const [status, setStatus] = useState<FormStatus>('idle');
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!formRef.current) return;
+
     setStatus('submitting');
-    setTimeout(() => setStatus('success'), 1500);
+
+    const formData = new FormData(formRef.current);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
+    const message = formData.get('message') as string;
+
+    const subject = encodeURIComponent(`New Project Inquiry from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nProject Details:\n${message}`
+    );
+
+    window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`;
+
+    setTimeout(() => setStatus('success'), 1000);
   };
 
   return (
@@ -77,22 +96,22 @@ export default function GetInTouchSection() {
               </button>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="w-full space-y-4">
+            <form ref={formRef} onSubmit={handleSubmit} className="w-full space-y-4">
               <div className="flex flex-col gap-2">
                 <Label htmlFor="name">Name</Label>
-                <Input type="text" id="name" required />
+                <Input type="text" id="name" name="name" required />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="email">Email</Label>
-                <Input type="email" id="email" required />
+                <Input type="email" id="email" name="email" required />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="phone">Phone</Label>
-                <Input type="tel" id="phone" required />
+                <Input type="tel" id="phone" name="phone" required />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="message">Message</Label>
-                <Textarea id="message" required />
+                <Textarea id="message" name="message" required />
               </div>
               <Button className="w-full" type="submit">
                 {status === 'submitting' ? (
