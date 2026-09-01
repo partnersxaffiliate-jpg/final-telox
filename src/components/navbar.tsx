@@ -59,25 +59,25 @@ export function Navbar() {
           {/* Hamburger — top right */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="relative w-10 h-10 flex flex-col items-end justify-center gap-[5px] z-50 group"
+            className="relative w-10 h-10 flex flex-col items-end justify-center gap-[6px] z-50 group"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           >
             <span
               className={cn(
-                'block h-px bg-foreground transition-all duration-500',
-                menuOpen ? 'w-6 rotate-45 translate-y-[6px]' : 'w-6 group-hover:w-7'
+                'block h-[2px] bg-white rounded-full transition-all duration-500',
+                menuOpen ? 'w-6 rotate-45 translate-y-[8px]' : 'w-6 group-hover:w-7'
               )}
             />
             <span
               className={cn(
-                'block h-px bg-foreground transition-all duration-500',
+                'block h-[2px] bg-white rounded-full transition-all duration-500',
                 menuOpen ? 'w-0 opacity-0' : 'w-4 group-hover:w-5'
               )}
             />
             <span
               className={cn(
-                'block h-px bg-foreground transition-all duration-500',
-                menuOpen ? 'w-6 -rotate-45 -translate-y-[6px]' : 'w-6 group-hover:w-7'
+                'block h-[2px] bg-white rounded-full transition-all duration-500',
+                menuOpen ? 'w-6 -rotate-45 -translate-y-[8px]' : 'w-6 group-hover:w-7'
               )}
             />
           </button>

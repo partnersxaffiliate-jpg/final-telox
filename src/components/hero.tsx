@@ -177,30 +177,66 @@ function KineticGrid({ children }: { children?: ReactNode }) {
     };
     setSize();
     window.addEventListener("resize", setSize);
-    const onMouseMove = (e: MouseEvent) => { targetMouseRef.current = { x: e.clientX, y: e.clientY }; };
-    const onClick = (e: MouseEvent) => {
-      ripplesRef.current.push({ x: e.clientX, y: e.clientY, radius: 0, opacity: 1, born: performance.now() });
 
+    const updatePointer = (x: number, y: number) => {
+      targetMouseRef.current = { x, y };
+    };
+
+    const onMouseMove = (e: MouseEvent) => updatePointer(e.clientX, e.clientY);
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    const triggerRipple = (x: number, y: number) => {
+      ripplesRef.current.push({ x, y, radius: 0, opacity: 1, born: performance.now() });
+    };
+
+    const onClick = (e: MouseEvent) => {
+      triggerRipple(e.clientX, e.clientY);
       const target = e.target as HTMLElement;
       if (target && (target.tagName === 'CANVAS' || target.classList.contains('hero-empty-space'))) {
         window.dispatchEvent(new Event('open-telox-nav'));
       }
     };
 
+    const onTouchEnd = (e: TouchEvent) => {
+      if (e.changedTouches.length > 0) {
+        const touch = e.changedTouches[0];
+        triggerRipple(touch.clientX, touch.clientY);
+        const target = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement;
+        if (target && (target.tagName === 'CANVAS' || target.classList.contains('hero-empty-space'))) {
+          window.dispatchEvent(new Event('open-telox-nav'));
+        }
+      }
+    };
+
     window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("click", onClick);
+    window.addEventListener("touchend", onTouchEnd);
     rafRef.current = requestAnimationFrame(animate);
     return () => {
       window.removeEventListener("resize", setSize);
       window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("click", onClick);
+      window.removeEventListener("touchend", onTouchEnd);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [animate]);
 
   return (
     <div className={cn("relative w-full h-screen overflow-hidden bg-[#0d0d0d]")}>
-      <canvas ref={canvasRef} className="fixed inset-0 w-full h-full z-0 pointer-events-auto cursor-pointer" />
+      <canvas ref={canvasRef} className="fixed inset-0 w-full h-full z-0 pointer-events-auto cursor-pointer touch-none" />
       <div className="relative z-10 w-full h-full hero-empty-space">{children}</div>
     </div>
   );

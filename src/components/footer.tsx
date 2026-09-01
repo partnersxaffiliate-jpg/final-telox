@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { ReactiveLine } from './ReactiveLine';
 
 const footerLinks = [
   {
@@ -30,7 +31,8 @@ const contactInfo = [
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-border/40 mt-20">
+    <footer className="relative mt-20">
+      <ReactiveLine className="absolute top-0 left-0 right-0" />
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-16 pb-12">
           {/* Brand section */}
@@ -97,7 +99,7 @@ export function Footer() {
           </div>
         </div>
 
-        <hr className="border-t border-border/40 my-8" />
+        <ReactiveLine className="my-8" />
 
         <div className="flex flex-col md:flex-row justify-between items-center text-sm space-y-4 md:space-y-0">
           <p className="text-muted-foreground">

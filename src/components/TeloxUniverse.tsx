@@ -397,6 +397,88 @@ export function TeloxUniverse({ onClose }: TeloxUniverseProps) {
     };
   }, [dragOffset, zoomLevel, isPaused, hoveredPlanet, activePlanet]);
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      if (isDraggingRef.current) {
+        const dx = touch.clientX - dragStartRef.current.x;
+        const dy = touch.clientY - dragStartRef.current.y;
+        setDragOffset((prev) => ({ x: prev.x + dx, y: prev.y + dy }));
+        dragStartRef.current = { x: touch.clientX, y: touch.clientY };
+        return;
+      }
+
+      const rect = canvas.getBoundingClientRect();
+      const mx = touch.clientX - rect.left;
+      const my = touch.clientY - rect.top;
+      const centerX = canvas.width / 2 + dragOffset.x;
+      const centerY = canvas.height / 2 + dragOffset.y;
+
+      const relX = (mx - centerX) / zoomLevel;
+      const relY = (my - centerY) / zoomLevel;
+
+      let found: PlanetData | null = null;
+      for (const planet of PLANETS) {
+        const angle = anglesRef.current[planet.id];
+        const px = Math.cos(angle) * planet.orbitRadius;
+        const py = Math.sin(angle) * planet.orbitRadius;
+        const dist = Math.sqrt((relX - px) ** 2 + (relY - py) ** 2);
+
+        if (dist <= planet.size * 1.8) {
+          found = planet;
+          break;
+        }
+      }
+
+      setHoveredPlanet(found);
+      canvas.style.cursor = found ? 'pointer' : 'grab';
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      isDraggingRef.current = true;
+      dragStartRef.current = { x: touch.clientX, y: touch.clientY };
+
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const mx = touch.clientX - rect.left;
+      const my = touch.clientY - rect.top;
+      const centerX = canvas.width / 2 + dragOffset.x;
+      const centerY = canvas.height / 2 + dragOffset.y;
+
+      const relX = (mx - centerX) / zoomLevel;
+      const relY = (my - centerY) / zoomLevel;
+
+      let found: PlanetData | null = null;
+      for (const planet of PLANETS) {
+        const angle = anglesRef.current[planet.id];
+        const px = Math.cos(angle) * planet.orbitRadius;
+        const py = Math.sin(angle) * planet.orbitRadius;
+        const dist = Math.sqrt((relX - px) ** 2 + (relY - py) ** 2);
+
+        if (dist <= planet.size * 1.8) {
+          found = planet;
+          break;
+        }
+      }
+
+      if (found) {
+        setActivePlanet(found);
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    isDraggingRef.current = false;
+  };
+
   const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (isDraggingRef.current) {
       const dx = e.clientX - dragStartRef.current.x;
@@ -468,7 +550,11 @@ export function TeloxUniverse({ onClose }: TeloxUniverseProps) {
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
         onWheel={handleWheel}
+        onTouchMove={handleTouchMove}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         className="absolute inset-0 w-full h-full touch-none"
+        style={{ touchAction: 'none' }}
       />
 
       <div

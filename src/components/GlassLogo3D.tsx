@@ -121,8 +121,31 @@ function CubesGroup() {
       rawMouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       rawMouse.current.y = (event.clientY / window.innerHeight) * 2 - 1;
     };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (event.touches.length > 0) {
+        const touch = event.touches[0];
+        rawMouse.current.x = (touch.clientX / window.innerWidth) * 2 - 1;
+        rawMouse.current.y = (touch.clientY / window.innerHeight) * 2 - 1;
+      }
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      if (event.touches.length > 0) {
+        const touch = event.touches[0];
+        rawMouse.current.x = (touch.clientX / window.innerWidth) * 2 - 1;
+        rawMouse.current.y = (touch.clientY / window.innerHeight) * 2 - 1;
+      }
+    };
+
     window.addEventListener("pointermove", handlePointerMove);
-    return () => window.removeEventListener("pointermove", handlePointerMove);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchstart", handleTouchStart);
+    };
   }, []);
 
   const cubeSize = 1.6;

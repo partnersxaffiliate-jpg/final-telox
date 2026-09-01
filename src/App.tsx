@@ -11,6 +11,7 @@ import { ContactPage } from '@/pages/contact';
 import Demo from '@/pages/demo';
 import { CrosusCaseStudy } from '@/pages/crosus-case-study';
 import { NikonTheBeatsCaseStudy } from '@/pages/nikon-the-beats-case-study';
+import { CustomCursor } from '@/components/CustomCursor';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -53,6 +54,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <CustomCursor />
       <Layout />
     </BrowserRouter>
   );
